@@ -8,7 +8,7 @@ Game::Game(int x, int y, string title)
     texture1 = new sf::Texture();
 
 
-    texture1->loadFromFile("racing-pack/PNG/Cars/car_black_1.png");
+    texture1->loadFromFile("Assets/graphics/car-rally-2-side.png");
     sprite1 = new sf::Sprite(*texture1);
 
     //How to change the center point on a sprite
