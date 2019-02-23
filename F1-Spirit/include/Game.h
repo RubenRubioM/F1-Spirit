@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include "SFML/Graphics.hpp"
+#include <vector>
+using namespace std;
 
 class Game
 {
@@ -10,15 +12,17 @@ class Game
         void draw();
         void gameLoop();
         void eventsLoop();
+        void addCar(sf::Sprite*);
         virtual ~Game();
 
     protected:
 
     private:
+        int numCars = 0;
         sf::RenderWindow *window;
-        sf::Texture *texture1;
-        sf::Sprite *sprite1;
         sf::Event *event;
+        sf::Sprite* carSprites[51]; //Maximum 50 enemies and the player
+
 };
 
 #endif // GAME_H

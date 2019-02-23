@@ -1,21 +1,32 @@
+/*
+    NOTES:
+    1) Car::getSprite() return a sf::Sprite* and we storage in sf::Sprites*(carSprites) but on draw function we have to pass her the value (sf::Sprite)
+
+*/
 #include "Game.h"
+#include "Car.h"
+#include <iostream>
+
+#define NUMCARSMAX 51
+
 using namespace std;
 
 Game::Game(int x, int y, string title)
 {
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
 
-    texture1 = new sf::Texture();
+
+    Car *car = new Car(10,"Assets/graphics/car-rally-2-side.png");
+    Car *car1 = new Car(10,"Assets/graphics/car-endurance-1-side.png");
 
 
-    texture1->loadFromFile("Assets/graphics/car-rally-2-side.png");
-    sprite1 = new sf::Sprite(*texture1);
 
-    //How to change the center point on a sprite
-    sprite1->setOrigin((sprite1->getTexture()->getSize().x)/2.f,(sprite1->getTexture()->getSize().y)/2.f);
-    sprite1->setPosition(300.f,300.f);
-    sprite1->setRotation(90);
-    sprite1->setScale(0.5,0.5);
+    addCar(car->getSprite());
+    addCar(car1->getSprite());
+
+    car1->getSprite()->scale(2,2);
+    car1->getSprite()->setPosition(400,400);
+
 
     event = new sf::Event();
 
@@ -23,9 +34,23 @@ Game::Game(int x, int y, string title)
     gameLoop();
 }
 
+
+void Game::addCar(sf::Sprite* _sprite){
+    carSprites[numCars] = _sprite;
+
+
+    numCars++;
+}
+
 void Game::draw(){
     window->clear();
-    window->draw(*sprite1);
+
+    //Draw all the cars
+    for(unsigned int i=0; i<numCars;i++){
+        window->draw(*carSprites[i]);
+
+    }
+
     window->display();
 }
 
@@ -34,13 +59,14 @@ void Game::gameLoop(){
 
     while(window->isOpen()){
         eventsLoop();
-        sprite1->rotate(1);
+
 
         draw();
     }
 }
 
 void Game::eventsLoop(){
+
     while(window->pollEvent(*event)){
 
         switch(event->type){
@@ -49,17 +75,27 @@ void Game::eventsLoop(){
                 switch(event->key.code){
 
                     case sf::Keyboard::Escape:
-                        window->close();
 
-                    case sf::Keyboard::A:
-                        sprite1->move(sprite1->getPosition().x+10, sprite1->getPosition().y+10);
+                        window->close();
+                        break;
+
+                    case sf::Keyboard::W:
+
+
+                        break;
+
+                    default:
+                        break;
 
 
                 }//End switch keyPressed
+                break;
 
             //Hit close button
             case sf::Event::Closed:
+
                 window->close();
+                break;
 
         }//End switch event type
 
