@@ -3,7 +3,12 @@
 
 #include "SFML/Graphics.hpp"
 #include <vector>
+#include "Car.h"
+
+#define NUMCARSMAX 51
+
 using namespace std;
+
 
 class Game
 {
@@ -12,7 +17,7 @@ class Game
         void draw();
         void gameLoop();
         void eventsLoop();
-        void addCar(sf::Sprite*);
+        void addCar(Car*);
         virtual ~Game();
 
     protected:
@@ -21,7 +26,12 @@ class Game
         int numCars = 0;
         sf::RenderWindow *window;
         sf::Event *event;
-        sf::Sprite* carSprites[51]; //Maximum 50 enemies and the player
+        sf::Sprite* carSprites[NUMCARSMAX]; //Maximum 50 enemies and the player
+        Car* cars[NUMCARSMAX];
+
+        enum carModels{
+            Model1=0,Model2=1,Model3=2,Model4=3,Model5=4,Model6=6,Model7=7,Model8=8,Model9=9,Model10=10  //We skip model 5 because is the same as model 1
+        };
 
 };
 
