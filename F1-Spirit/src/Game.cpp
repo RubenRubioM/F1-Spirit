@@ -9,7 +9,7 @@
 #include <iostream>
 #include <math.h>
 
-#define MAXSPEED    0.3
+
 
 
 using namespace std;
@@ -21,7 +21,13 @@ Game::Game(int x, int y, string title)
     event = new sf::Event();
 
     Car *player = new Car(0.003,"Assets/graphics/cars-f1.png",Model1);
-    player->getSprite()->setPosition(400,400);
+    playerCamera = new Camera();
+
+    sf::Texture* bgTexture = new sf::Texture();
+    bgTexture->loadFromFile("Assets/fb-og.jpg");
+    bg = new sf::Sprite(*bgTexture);
+
+    hud = new Hud();
 
 
     //adding cars
@@ -40,11 +46,17 @@ void Game::addCar(Car* car){
 void Game::draw(){
     window->clear();
 
+    hud->draw(window);
+    window->setView(*playerCamera->getCameraView());
+    window->draw(*bg);
+
     //Draw all the cars
     for(unsigned int i=0; i<numCars;i++){
         window->draw(*cars[i]->getSprite());
 
     }
+
+
 
     window->display();
 }
@@ -52,8 +64,17 @@ void Game::draw(){
 //Function that executes once per frame
 void Game::gameLoop(){
 
+    sf::Clock deltaClock;
     while(window->isOpen()){
+        deltaTime = deltaClock.restart();
+
         eventsLoop();
+
+
+
+        cars[0]->run(deltaTime.asMilliseconds());
+        playerCamera->moveCamera(cars[0]);
+
         draw();
     }
 }
@@ -79,6 +100,7 @@ void Game::eventsLoop(){
 
                     case sf::Keyboard::D:
                         player->setRotation(45);
+
                         break;
 
                     case sf::Keyboard::A:
@@ -123,20 +145,7 @@ void Game::eventsLoop(){
     }//End events loop
 
 
-    if(player->getMoving()){
-        if(player->getSpeed()<MAXSPEED){
-            player->setSpeed(player->getSpeed()+player->getAceleration());
 
-        }
-
-    }else{
-        if(player->getSpeed()>0){
-            player->setSpeed(player->getSpeed()-player->getAceleration());
-
-        }
-
-    }
-    player->run();
 }
 
 

@@ -4,18 +4,20 @@
 #include "SFML/Graphics.hpp"
 
 #define PI      3.141592
+#define MAXSPEED    0.3
 using namespace std;
 
 class Car
 {
     public:
         Car(float,string,int);
-        void run();
+        void run(float);
         float getSpeed();
         float getRotation();
         float getAceleration();
         bool getMoving();
         sf::Sprite* getSprite();
+        sf::Clock getSecondRotationClock();
         void setRotation(float);
         void setSpeed(float);
         void setMoving(bool);
@@ -27,6 +29,7 @@ class Car
         float rotation; // 45 or -45
         float aceleration;
         bool moving = false;
+        sf::Clock secondRotationClock;
         sf::Texture *texture;
         sf::Sprite *sprite;
 
