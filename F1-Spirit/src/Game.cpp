@@ -20,7 +20,7 @@ Game::Game(int x, int y, string title)
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
     event = new sf::Event();
 
-    Car *player = new Car(0.003,"Assets/graphics/cars-f1.png",Model1);
+    Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
     sf::Texture* bgTexture = new sf::Texture();
@@ -28,6 +28,7 @@ Game::Game(int x, int y, string title)
     bg = new sf::Sprite(*bgTexture);
 
     hud = new Hud();
+
 
 
     //adding cars
@@ -46,7 +47,8 @@ void Game::addCar(Car* car){
 void Game::draw(){
     window->clear();
 
-    hud->draw(window);
+
+
     window->setView(*playerCamera->getCameraView());
     window->draw(*bg);
 
@@ -55,9 +57,7 @@ void Game::draw(){
         window->draw(*cars[i]->getSprite());
 
     }
-
-
-
+    hud->draw(window);
     window->display();
 }
 
@@ -70,10 +70,9 @@ void Game::gameLoop(){
 
         eventsLoop();
 
-
-
         cars[0]->run(deltaTime.asMilliseconds());
         playerCamera->moveCamera(cars[0]);
+        hud->updateVelocityText(cars[0]->getSpeed());
 
         draw();
     }
