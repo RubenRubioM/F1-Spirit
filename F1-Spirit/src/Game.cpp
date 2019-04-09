@@ -3,6 +3,7 @@
     1) Car::getSprite() returns a sf::Sprite* and we storage in sf::Sprites*(carSprites) but on draw function we have to pass her the value (sf::Sprite)
     2) The events loops only executes when an event happens, this is why we have to put the movement system outside the loop
     3) I'll have to make a method that reset the fuelClock when the car reload the fuel
+    4) To not show the box for broken pieces I just scale(0,0)
 
 */
 #include "Game.h"
@@ -21,7 +22,7 @@ Game::Game(int x, int y, string title)
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
     event = new sf::Event();
 
-    Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
+    Car *player = new Car(0.0003,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
     sf::Texture* bgTexture = new sf::Texture();
@@ -71,10 +72,11 @@ void Game::gameLoop(){
 
         eventsLoop();
 
-        //If the car has fuel, run
-        if(hud->getFuelLast()!=0){
-           cars[0]->run(deltaTime.asMilliseconds());
+        if(hud->getFuelLast()==0){
+            cars[0]->setMoving(false);
         }
+
+        cars[0]->run(deltaTime.asMilliseconds());
 
 
         // ==== Update camera position ====
@@ -83,6 +85,7 @@ void Game::gameLoop(){
         // ==== Update HUD ====
         hud->updateVelocityText(cars[0]->getSpeed());
         hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
+        hud->updateGear(cars[0]->updateGear());
 
         draw();
     }
@@ -104,7 +107,10 @@ void Game::eventsLoop(){
 
                     case sf::Keyboard::W: //Movement
                         //Set that the player is moving
-                        player->setMoving(true);
+                        if(hud->getFuelLast()!=0){
+                           player->setMoving(true);
+                        }
+
                         break;
 
                     case sf::Keyboard::D:
@@ -120,6 +126,16 @@ void Game::eventsLoop(){
                     case sf::Keyboard::R:
                         player->reloadFuel();
                         break;
+
+                    //TODO just for testing
+                    case sf::Keyboard::Q:
+                        hud->updatePieceBroken(player->breakPiece());
+                        break;
+
+                    //TODO just for testing
+                    case sf::Keyboard::T:
+                        player->repairCar();
+                        hud->repairPieces();
 
                     default:
                         break;

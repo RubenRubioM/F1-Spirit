@@ -10,7 +10,7 @@
 	"Camera.h"
 	"Hud.h"
 
-1554823301 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
+1554830034 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
 	"Game.h"
 	<iostream>
 	<math.h>
@@ -21,10 +21,14 @@
 1550945104 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/EnemyCar.h
 	<Car.h>
 
-1554823169 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
+1554829660 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
 	"SFML/Graphics.hpp"
+	<stdlib.h>
+	<time.h>
+	<stdio.h>
+	<iostream>
 
-1554823189 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
+1554829976 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
 	"Car.h"
 	<math.h>
 
@@ -34,10 +38,10 @@
 1554544032 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Camera.cpp
 	"Camera.h"
 
-1554818235 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
+1554829861 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
 	"Hud.h"
 
-1554823312 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
+1554829818 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
 	"SFML/Graphics.hpp"
 	<iostream>
 	<string>

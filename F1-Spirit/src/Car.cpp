@@ -16,6 +16,7 @@ Car::Car(float _aceleration,string path, int carModel)
     sprite->setPosition(400,400);
 
 
+
 }
 
 void Car::run(float _deltaTime){
@@ -23,15 +24,13 @@ void Car::run(float _deltaTime){
 
     if(getMoving()){
         if(getSpeed()<MAXSPEED){
-            setSpeed(getSpeed()+getAceleration());
+            setSpeed(getSpeed()+getAceleration()*speedPenalty);
         }
 
     }else{
         if(getSpeed()>0){
-            setSpeed(getSpeed()-getAceleration());
-
+            setSpeed(getSpeed()-getAceleration()*speedPenalty);
         }
-
     }
 
     float radians = (rotation*PI)/180.0;
@@ -44,8 +43,78 @@ void Car::run(float _deltaTime){
 
 }
 
+int Car::updateGear(){
+
+
+    if(speed <= 0.035f){
+        aceleration = 0.0003;
+        return 1;
+    }else if(speed > 0.035f && speed <= 0.1f){
+        aceleration = 0.00020;
+        return 2;
+    }else if(speed > 0.1f && speed <= 0.15f){
+        aceleration = 0.00014;
+        return 3;
+    }else if(speed > 0.15f && speed <= 0.2f){
+        aceleration = 0.00010;
+        return 4;
+    }else if(speed > 0.2f && speed <= 0.275f){
+        aceleration = 0.00005;
+        return 5;
+    }else{
+        aceleration = 0.00003;
+        return 6;
+    }
+}
+
 void Car::reloadFuel(){
     fuelClock.restart();
+}
+
+int Car::breakPiece(){
+    bool broken = false;
+    srand(time(NULL));
+
+    int piece = 0;
+    while(!broken){
+        piece = rand()%4;
+        if(pieceBroken[piece]==false){
+           pieceBroken[piece] = true;
+           broken = true;
+        }
+
+    }
+
+    updatePenalty();
+    return piece;
+}
+
+void Car::repairCar(){
+
+    for(int i=0; i<4; i++){
+        pieceBroken[i] = false;
+    }
+
+    updatePenalty();
+}
+
+void Car::updatePenalty(){
+
+    int piecesBroken = 0;
+
+    for(int i=0;i<4;i++){
+        if(pieceBroken[i]){
+            piecesBroken++;
+        }
+    }
+
+    speedPenalty = 1 - (0.2*piecesBroken);
+
+}
+
+
+void Car::gameOver(){
+    cout << "Game over..." << endl;
 }
 
 void Car::setRotation(float _rotation){
@@ -59,6 +128,10 @@ void Car::setSpeed(float _speed){
 
 void Car::setMoving(bool _moving){
     moving = _moving;
+}
+
+void Car::setAceleration(float _aceleration){
+    aceleration = _aceleration;
 }
 
 float Car::getSpeed(){return speed;}
