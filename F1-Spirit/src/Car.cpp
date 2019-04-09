@@ -14,6 +14,8 @@ Car::Car(float _aceleration,string path, int carModel)
     sprite->setPosition(16,16); //We set origin to 16,16 so now we have to spawn him at 16,16 instead of 0,0
     sprite->scale(0.5,0.5);
     sprite->setPosition(400,400);
+
+
 }
 
 void Car::run(float _deltaTime){
@@ -42,6 +44,10 @@ void Car::run(float _deltaTime){
 
 }
 
+void Car::reloadFuel(){
+    fuelClock.restart();
+}
+
 void Car::setRotation(float _rotation){
     rotation = _rotation;
     sprite->setRotation(rotation);
@@ -61,6 +67,7 @@ bool Car::getMoving(){return moving;}
 float Car::getAceleration(){return aceleration;}
 sf::Sprite* Car::getSprite(){return sprite;}
 sf::Clock Car::getSecondRotationClock(){return secondRotationClock;}
+sf::Clock Car::getFuelClock(){return fuelClock;}
 
 Car::~Car()
 {

@@ -2,6 +2,7 @@
     NOTES:
     1) Car::getSprite() returns a sf::Sprite* and we storage in sf::Sprites*(carSprites) but on draw function we have to pass her the value (sf::Sprite)
     2) The events loops only executes when an event happens, this is why we have to put the movement system outside the loop
+    3) I'll have to make a method that reset the fuelClock when the car reload the fuel
 
 */
 #include "Game.h"
@@ -70,9 +71,18 @@ void Game::gameLoop(){
 
         eventsLoop();
 
-        cars[0]->run(deltaTime.asMilliseconds());
+        //If the car has fuel, run
+        if(hud->getFuelLast()!=0){
+           cars[0]->run(deltaTime.asMilliseconds());
+        }
+
+
+        // ==== Update camera position ====
         playerCamera->moveCamera(cars[0]);
+
+        // ==== Update HUD ====
         hud->updateVelocityText(cars[0]->getSpeed());
+        hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
 
         draw();
     }
@@ -104,6 +114,11 @@ void Game::eventsLoop(){
 
                     case sf::Keyboard::A:
                         player->setRotation(-45);
+                        break;
+
+                    //TODO just for testing
+                    case sf::Keyboard::R:
+                        player->reloadFuel();
                         break;
 
                     default:

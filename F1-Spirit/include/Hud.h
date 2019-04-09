@@ -19,9 +19,14 @@ class Hud
 
         void draw(sf::RenderWindow*);
         void updateVelocityText(float);
+        void updateFuel(float); //This method will recieve the seconds since last fuel reload
+
+        int getFuelLast();
+
         virtual ~Hud();
 
     private:
+        int fuelLast = 4;
         sf::View* hudView;
         sf::Texture* hudTexture;
         sf::Sprite* hud;

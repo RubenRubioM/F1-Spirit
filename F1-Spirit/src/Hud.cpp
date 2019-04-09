@@ -68,6 +68,21 @@ void Hud::updateVelocityText(float _velocity){
     velocityText->setString(velocityString);
 }
 
+// TODO: adjust to the final numbers
+void Hud::updateFuel(float _time){
+    if(_time <= 10.f){
+        fuelLast = 4;
+    }else if( _time >10.f && _time <=20.f){
+        fuelLast = 3;
+    }else if( _time >20.f && _time <=30.f){
+        fuelLast = 2;
+    }else if( _time >30.f && _time <=40.f){
+        fuelLast = 1;
+    }else{
+        fuelLast = 0;
+    }
+}
+
 void Hud::draw(sf::RenderWindow* _window){
     _window->setView(*hudView);
     // ==== We draw first the image ====
@@ -76,12 +91,14 @@ void Hud::draw(sf::RenderWindow* _window){
     // ==== We draw now the texts and rectangles ====
     _window->draw(*velocityText);
 
-    for(int i=0; i<fuelVector.size();i++){
+    for(int i=0; i<=fuelLast;i++){
         _window->draw(fuelVector.at(i));
     }
 
 
 }
+
+int Hud::getFuelLast(){return fuelLast;}
 
 Hud::~Hud()
 {

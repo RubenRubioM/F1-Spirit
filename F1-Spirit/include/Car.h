@@ -12,12 +12,15 @@ class Car
     public:
         Car(float,string,int);
         void run(float);
+        void reloadFuel();
+
         float getSpeed();
         float getRotation();
         float getAceleration();
         bool getMoving();
         sf::Sprite* getSprite();
         sf::Clock getSecondRotationClock();
+        sf::Clock getFuelClock();
         void setRotation(float);
         void setSpeed(float);
         void setMoving(bool);
@@ -30,6 +33,7 @@ class Car
         float aceleration;
         bool moving = false;
         sf::Clock secondRotationClock;
+        sf::Clock fuelClock;
         sf::Texture *texture;
         sf::Sprite *sprite;
 
