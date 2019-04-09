@@ -42,9 +42,15 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="cb.bmp" />
+		<Unit filename="include/Camera.h" />
+		<Unit filename="include/Car.h" />
 		<Unit filename="include/Game.h" />
+		<Unit filename="include/Hud.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Camera.cpp" />
+		<Unit filename="src/Car.cpp" />
 		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Hud.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

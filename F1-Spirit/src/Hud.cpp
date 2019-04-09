@@ -18,21 +18,48 @@ Hud::Hud()
     font->loadFromFile("Assets/Fonts/Formula1-Regular.ttf");
     velocityText = new sf::Text("Hello",*font);
     velocityText->setOrigin(velocityText->getGlobalBounds().width / 2.f, velocityText->getGlobalBounds().height /2.f);
-    velocityText->setPosition(570,430);
+    velocityText->setPosition(565,430);
     velocityText->setColor(sf::Color::White);
     velocityText->setCharacterSize(30);
+
+    // ==== Initialize fuel sprite ====
+    fuelTexture = new sf::Texture();
+    fuelTexture->loadFromFile("Assets/graphics/hud/fuel.png");
+    fuelSprite = new sf::Sprite(*fuelTexture);
+    fuelSprite->scale(2,1);
+    fuelSprite->setColor(sf::Color(255, 0, 0));
+
+    //We want 5 *fuelSprite
+    for(int i=0; i<=4 ; i++){
+       fuelVector.push_back(*fuelSprite);
+       if(i==0){
+          fuelVector.at(i).setPosition(500,493);
+       }else{
+          fuelVector.at(i).setPosition(fuelVector.at(0).getPosition().x+30*i, fuelVector.at(0).getPosition().y);
+       }
+
+    }
+
 
 }
 
 void Hud::updateVelocityText(float _velocity){
 
-    //We do this because the pointing float precision
+    //We do this because the pointing float precision and sometimes is 0.307 instead of 0.3 :(
     if(_velocity<0) _velocity = 0;
 
-    if(_velocity>3) _velocity = 3;
+    if(_velocity>=0.3) _velocity = 0.3;
 
-    if(_velocity>=1.f){
-        //velocityText->setColor(sf::Color::)
+    //We change the color of the sf::Text *velocityText
+    if(_velocity >= 0.1f && _velocity <0.2f){
+        velocityText->setColor(sf::Color(76, 230, 0));
+    }else if(_velocity >= 0.2f && _velocity <= 0.275f){
+
+        velocityText->setColor(sf::Color(255, 166, 77));
+    }else if(_velocity > 0.275f){
+        velocityText->setColor(sf::Color(255, 26, 26));
+    }else if(_velocity <0.1f){
+        velocityText->setColor(sf::Color::White);
     }
 
     _velocity *= 1000;
@@ -48,6 +75,10 @@ void Hud::draw(sf::RenderWindow* _window){
 
     // ==== We draw now the texts and rectangles ====
     _window->draw(*velocityText);
+
+    for(int i=0; i<fuelVector.size();i++){
+        _window->draw(fuelVector.at(i));
+    }
 
 
 }

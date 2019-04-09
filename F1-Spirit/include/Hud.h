@@ -4,6 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include <string>
+#include <stdlib.h>     /* srand, rand */
+#include <vector>
 
 using namespace std;
 
@@ -24,6 +26,10 @@ class Hud
         sf::Texture* hudTexture;
         sf::Sprite* hud;
         sf::Text *velocityText;
+        sf::Texture* fuelTexture;
+        sf::Sprite* fuelSprite;
+        vector<sf::Sprite> fuelVector; //Vectore where we storage all the fuel sprites
+
 };
 
 #endif // HUD_H

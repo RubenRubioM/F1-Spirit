@@ -42,3 +42,42 @@
 	<iostream>
 	<string>
 
+1554793679 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/main.cpp
+	<SFML/Graphics.hpp>
+	"Game.h"
+
+1554793679 /home/rrm73/Escritorio/F1-Spirit/F1-Spirit/include/Game.h
+	"SFML/Graphics.hpp"
+	<vector>
+	"Car.h"
+	"Camera.h"
+	"Hud.h"
+
+1554793679 /home/rrm73/Escritorio/F1-Spirit/F1-Spirit/include/Car.h
+	"SFML/Graphics.hpp"
+
+1554793679 /home/rrm73/Escritorio/F1-Spirit/F1-Spirit/include/Camera.h
+	"Car.h"
+
+1554796089 /home/rrm73/Escritorio/F1-Spirit/F1-Spirit/include/Hud.h
+	"SFML/Graphics.hpp"
+	<iostream>
+	<string>
+	<stdlib.h>
+	<vector>
+
+1554793679 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Camera.cpp
+	"Camera.h"
+
+1554793679 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Car.cpp
+	"Car.h"
+	<math.h>
+
+1554793679 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Game.cpp
+	"Game.h"
+	<iostream>
+	<math.h>
+
+1554797148 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Hud.cpp
+	"Hud.h"
+
