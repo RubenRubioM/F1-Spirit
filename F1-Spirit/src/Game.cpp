@@ -22,12 +22,14 @@ Game::Game(int x, int y, string title)
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
     event = new sf::Event();
 
-    Car *player = new Car(0.0003,"Assets/graphics/cars-f1.png",Model1);
+    Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
     sf::Texture* bgTexture = new sf::Texture();
-    bgTexture->loadFromFile("Assets/fb-og.jpg");
+    bgTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
     bg = new sf::Sprite(*bgTexture);
+    bg->scale(0.4,0.4);
+    bg->setPosition(player->getSprite()->getPosition().x-90,player->getSprite()->getPosition().y-2000);
 
     hud = new Hud();
 
@@ -105,7 +107,7 @@ void Game::eventsLoop(){
                         window->close();
                         break;
 
-                    case sf::Keyboard::W: //Movement
+                    case sf::Keyboard::Space: //Movement
                         //Set that the player is moving
                         if(hud->getFuelLast()!=0){
                            player->setMoving(true);
@@ -113,13 +115,32 @@ void Game::eventsLoop(){
 
                         break;
 
-                    case sf::Keyboard::D:
-                        player->setRotation(45);
+                    case sf::Keyboard::Right:
+                        if(rotationKeyUp){
+                            rotationKeyUp = false;
+                            rotationClock.restart();
+                        }
+
+                        if(rotationClock.getElapsedTime().asSeconds()>0.5){
+                            player->setRotation(45);
+                        }else{
+                            player->setRotation(30);
+                        }
+
 
                         break;
 
-                    case sf::Keyboard::A:
-                        player->setRotation(-45);
+                    case sf::Keyboard::Left:
+                        if(rotationKeyUp){
+                            rotationKeyUp = false;
+                            rotationClock.restart();
+                        }
+
+                        if(rotationClock.getElapsedTime().asSeconds()>0.5){
+                            player->setRotation(-45);
+                        }else{
+                            player->setRotation(-30);
+                        }
                         break;
 
                     //TODO just for testing
@@ -155,14 +176,16 @@ void Game::eventsLoop(){
             case sf::Event::KeyReleased:
                 switch(event->key.code){
 
-                    case sf::Keyboard::D:
-                        player->setRotation(0);
+                    case sf::Keyboard::Right:
+                        rotationKeyUp = true;
+                        rotationClock.restart();
                         break;
 
-                    case sf::Keyboard::A:
-                        player->setRotation(0);
+                    case sf::Keyboard::Left:
+                        rotationKeyUp = true;
+                        rotationClock.restart();
                         break;
-                    case sf::Keyboard::W:
+                    case sf::Keyboard::Space:
                         //Set that the player stop pressing the moving key
                         player->setMoving(false);
                         break;
@@ -174,7 +197,16 @@ void Game::eventsLoop(){
 
     }//End events loop
 
-
+    //Decreasing rotation
+    if(rotationKeyUp && rotationClock.getElapsedTime().asSeconds()<0.2){
+        if(player->getRotation()==45){
+            player->setRotation(30);
+        }else if(player->getRotation()==-45){
+            player->setRotation(-30);
+        }
+    }else if(rotationKeyUp && rotationClock.getElapsedTime().asSeconds()>=0.2){
+        player->setRotation(0);
+    }
 
 }
 
