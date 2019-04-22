@@ -46,6 +46,7 @@ class Car
         float speedPenalty = 1; // Penalty to be applied to our car speed
         bool moving = false;
         bool pieceBroken[4] = {false,false,false,false};
+        bool carCrashed = false;
         sf::Clock secondRotationClock;
         sf::Clock fuelClock;
         sf::Texture *texture;

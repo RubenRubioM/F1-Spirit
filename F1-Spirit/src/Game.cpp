@@ -25,15 +25,34 @@ Game::Game(int x, int y, string title)
     Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
-    sf::Texture* bgTexture = new sf::Texture();
-    bgTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
-    bg = new sf::Sprite(*bgTexture);
-    bg->scale(0.4,0.4);
-    bg->setPosition(player->getSprite()->getPosition().x-90,player->getSprite()->getPosition().y-2000);
+    roadTexture = new sf::Texture();
+    roadTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
+    roadSprite = new sf::Sprite(*roadTexture);
+    roadSprite->scale(0.4,0.4);
+    //roadSprite->setPosition(player->getSprite()->getPosition().x-300,player->getSprite()->getPosition().y-2000);
+    roadSprite->setPosition(-100,-400);
+
+    /*
+    roadSprite2 = new sf::Sprite(*roadTexture);
+    roadSprite2->scale(0.4,0.4);
+    roadSprite2->setPosition(-110,-2640);
+
+
+    roadSprite3 = new sf::Sprite(*roadTexture);
+    roadSprite3->scale(0.4,0.4);
+    roadSprite3->setPosition(-115,-(2640*2)+400);
+    */
+
+
+    grassTexture = new sf::Texture();
+    grassTexture->loadFromFile("Assets/Mapa/f1spiritMapCesped.png");
+    grassSprite = new sf::Sprite(*grassTexture);
+    grassSprite->scale(0.4,0.4);
+    //grassSprite->setPosition(player->getSprite()->getPosition().x-300,player->getSprite()->getPosition().y-2000);
+    grassSprite->setPosition(-100,-400);
+
 
     hud = new Hud();
-
-
 
     //adding cars
     addCar(player);
@@ -54,7 +73,11 @@ void Game::draw(){
 
 
     window->setView(*playerCamera->getCameraView());
-    window->draw(*bg);
+
+    window->draw(*grassSprite);
+    window->draw(*roadSprite);
+    //window->draw(*roadSprite2);
+    //window->draw(*roadSprite3);
 
     //Draw all the cars
     for(unsigned int i=0; i<numCars;i++){
@@ -69,17 +92,25 @@ void Game::draw(){
 void Game::gameLoop(){
 
     sf::Clock deltaClock;
+
+    Car *player = cars[0];
     while(window->isOpen()){
         deltaTime = deltaClock.restart();
 
         eventsLoop();
 
-        if(hud->getFuelLast()==0){
-            cars[0]->setMoving(false);
+        //We check if the car is at the end of the lap
+        if(player->getSprite()->getPosition().y < -300){
+            player->getSprite()->setPosition(player->getSprite()->getPosition().x+10,2300);
         }
 
-        cars[0]->run(deltaTime.asMilliseconds());
 
+        // ==== CAR ====
+        if(hud->getFuelLast()==0){
+            player->setMoving(false);
+        }
+
+        player->run(deltaTime.asSeconds()*1000);
 
         // ==== Update camera position ====
         playerCamera->moveCamera(cars[0]);
@@ -88,6 +119,7 @@ void Game::gameLoop(){
         hud->updateVelocityText(cars[0]->getSpeed());
         hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
         hud->updateGear(cars[0]->updateGear());
+        //==============================================
 
         draw();
     }
@@ -122,7 +154,7 @@ void Game::eventsLoop(){
                         }
 
                         if(rotationClock.getElapsedTime().asSeconds()>0.5){
-                            player->setRotation(45);
+                            player->setRotation(60);
                         }else{
                             player->setRotation(30);
                         }
@@ -137,7 +169,7 @@ void Game::eventsLoop(){
                         }
 
                         if(rotationClock.getElapsedTime().asSeconds()>0.5){
-                            player->setRotation(-45);
+                            player->setRotation(-60);
                         }else{
                             player->setRotation(-30);
                         }
@@ -199,9 +231,9 @@ void Game::eventsLoop(){
 
     //Decreasing rotation
     if(rotationKeyUp && rotationClock.getElapsedTime().asSeconds()<0.2){
-        if(player->getRotation()==45){
+        if(player->getRotation()==60){
             player->setRotation(30);
-        }else if(player->getRotation()==-45){
+        }else if(player->getRotation()==-60){
             player->setRotation(-30);
         }
     }else if(rotationKeyUp && rotationClock.getElapsedTime().asSeconds()>=0.2){

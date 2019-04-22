@@ -32,7 +32,13 @@ class Game
         sf::Sprite* carSprites[NUMCARSMAX]; //Maximum 50 enemies and the player
         Car* cars[NUMCARSMAX];
         Camera *playerCamera;
-        sf::Sprite* bg;
+        sf::Sprite* roadSprite;
+        sf::Texture* roadTexture;
+        sf::Sprite* roadSprite2;
+        sf::Sprite* roadSprite3;
+
+        sf::Sprite* grassSprite;
+        sf::Texture* grassTexture;
         Hud* hud;
 
         sf::Clock rotationClock;

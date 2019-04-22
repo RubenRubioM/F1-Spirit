@@ -9,11 +9,12 @@ Car::Car(float _aceleration,string path, int carModel)
     texture = new sf::Texture();
 
     texture->loadFromFile(path,sf::IntRect(32*carModel,0,32,32));
+    texture->setSmooth(true);
     sprite = new sf::Sprite(*texture);
     sprite->setOrigin(sprite->getTexture()->getSize().x/2.f,sprite->getTexture()->getSize().y/2.f);
     sprite->setPosition(16,16); //We set origin to 16,16 so now we have to spawn him at 16,16 instead of 0,0
     sprite->scale(0.5,0.5);
-    sprite->setPosition(400,400);
+    sprite->setPosition(310,2300);
 
 
 
@@ -76,16 +77,19 @@ int Car::breakPiece(){
     srand(time(NULL));
 
     int piece = 0;
-    while(!broken){
-        piece = rand()%4;
-        if(pieceBroken[piece]==false){
-           pieceBroken[piece] = true;
-           broken = true;
+    if(!carCrashed){
+        while(!broken){
+            piece = rand()%4;
+            if(pieceBroken[piece]==false){
+               pieceBroken[piece] = true;
+               broken = true;
+            }
+
         }
 
+        updatePenalty();
     }
 
-    updatePenalty();
     return piece;
 }
 
@@ -107,8 +111,10 @@ void Car::updatePenalty(){
             piecesBroken++;
         }
     }
-
-    speedPenalty = 1 - (0.2*piecesBroken);
+    if(piecesBroken==4){
+        carCrashed=true;
+    }
+    speedPenalty = 1 - (0.22*piecesBroken);
 
 }
 
