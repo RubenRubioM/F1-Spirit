@@ -8,7 +8,7 @@
  <tileset firstgid="153" source="walls.tsx"/>
  <tileset firstgid="233" source="crowd2.tsx"/>
  <tileset firstgid="905" source="crowd3.tsx"/>
- <layer name="Cesped" width="144" height="336" visible="0">
+ <layer name="Cesped" width="144" height="336">
   <data>
    <chunk x="0" y="-112" width="16" height="16">
     <tile/>

@@ -16,6 +16,8 @@ Car::Car(float _aceleration,string path, int carModel)
     sprite->scale(0.5,0.5);
     sprite->setPosition(310,2300);
 
+    hud = Hud::getInstance();
+
 
 
 }
@@ -43,6 +45,35 @@ void Car::run(float _deltaTime){
     }
 
 }
+
+void Car::colision(){
+
+    if(!colisionando){
+        animationClock.restart();
+        colisionando = true;
+    }
+
+
+    if(animationClock.getElapsedTime().asSeconds()>0.2 && frame<6){
+        sf::Texture* textureAnimation = new sf::Texture();
+        textureAnimation->loadFromFile("Assets/graphics/cars-f1.png",sf::IntRect(0,32*frame,32,32));
+        sprite->setTexture(*textureAnimation);
+        frame++;
+        animationClock.restart();
+    }else if(frame==6){
+        sf::Texture* textureAnimation = new sf::Texture();
+        textureAnimation->loadFromFile("Assets/graphics/cars-f1.png",sf::IntRect(0,0,32,32));
+        sprite->setTexture(*textureAnimation);
+        colisionando = false;
+        frame = 0;
+        hud->updatePieceBroken(breakPiece());
+        sprite->setPosition(300,sprite->getPosition().y);
+        speed = 0;
+    }
+
+
+}
+
 
 int Car::updateGear(){
 
@@ -140,9 +171,14 @@ void Car::setAceleration(float _aceleration){
     aceleration = _aceleration;
 }
 
+void Car::setColisionando(bool _colisionando){
+    colisionando = _colisionando;
+}
+
 float Car::getSpeed(){return speed;}
 float Car::getRotation(){return rotation;}
 bool Car::getMoving(){return moving;}
+bool Car::getColisionando(){return colisionando;}
 float Car::getAceleration(){return aceleration;}
 sf::Sprite* Car::getSprite(){return sprite;}
 sf::Clock Car::getSecondRotationClock(){return secondRotationClock;}

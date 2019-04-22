@@ -34,11 +34,13 @@ class Game
         Camera *playerCamera;
         sf::Sprite* roadSprite;
         sf::Texture* roadTexture;
-        sf::Sprite* roadSprite2;
-        sf::Sprite* roadSprite3;
+        sf::Sprite* roadHeatSprite;
+        sf::Texture* roadHeatTexture;
 
-        sf::Sprite* grassSprite;
-        sf::Texture* grassTexture;
+        sf::Texture* treesTexture;
+        sf::Sprite* treesLeft;
+        sf::Sprite* treesRight;
+
         Hud* hud;
 
         sf::Clock rotationClock;

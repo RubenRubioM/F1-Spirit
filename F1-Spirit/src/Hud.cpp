@@ -1,5 +1,7 @@
 #include "Hud.h"
 
+Hud *Hud::unicaInstancia = 0;
+
 Hud::Hud()
 {
     sf::Texture* hudTexture = new sf::Texture();

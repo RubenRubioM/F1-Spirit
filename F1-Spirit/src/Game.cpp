@@ -29,30 +29,29 @@ Game::Game(int x, int y, string title)
     roadTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
     roadSprite = new sf::Sprite(*roadTexture);
     roadSprite->scale(0.4,0.4);
-    //roadSprite->setPosition(player->getSprite()->getPosition().x-300,player->getSprite()->getPosition().y-2000);
     roadSprite->setPosition(-100,-400);
 
+    treesTexture = new sf::Texture();
+    treesTexture->loadFromFile("Assets/Mapa/Arboles.png");
+    treesLeft = new sf::Sprite(*treesTexture);
+    treesLeft->scale(0.4,0.4);
+    treesLeft->setPosition(100,0);
+
+    treesRight = new sf::Sprite(*treesTexture);
+    treesRight->scale(0.4,0.4);
+    treesRight->setPosition(800,0);
+
     /*
-    roadSprite2 = new sf::Sprite(*roadTexture);
-    roadSprite2->scale(0.4,0.4);
-    roadSprite2->setPosition(-110,-2640);
-
-
-    roadSprite3 = new sf::Sprite(*roadTexture);
-    roadSprite3->scale(0.4,0.4);
-    roadSprite3->setPosition(-115,-(2640*2)+400);
-    */
-
-
     grassTexture = new sf::Texture();
     grassTexture->loadFromFile("Assets/Mapa/f1spiritMapCesped.png");
     grassSprite = new sf::Sprite(*grassTexture);
     grassSprite->scale(0.4,0.4);
-    //grassSprite->setPosition(player->getSprite()->getPosition().x-300,player->getSprite()->getPosition().y-2000);
     grassSprite->setPosition(-100,-400);
+    */
 
 
-    hud = new Hud();
+
+    hud = Hud::getInstance();
 
     //adding cars
     addCar(player);
@@ -74,10 +73,10 @@ void Game::draw(){
 
     window->setView(*playerCamera->getCameraView());
 
-    window->draw(*grassSprite);
+
     window->draw(*roadSprite);
-    //window->draw(*roadSprite2);
-    //window->draw(*roadSprite3);
+    window->draw(*treesLeft);
+    window->draw(*treesRight);
 
     //Draw all the cars
     for(unsigned int i=0; i<numCars;i++){
@@ -94,10 +93,25 @@ void Game::gameLoop(){
     sf::Clock deltaClock;
 
     Car *player = cars[0];
+
+
     while(window->isOpen()){
         deltaTime = deltaClock.restart();
 
         eventsLoop();
+
+
+
+        //Colision
+        if(treesLeft->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds()) || treesRight->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
+            player->setColisionando(true);
+        }
+
+        if(player->getColisionando()){
+            player->colision();
+        }
+
+
 
         //We check if the car is at the end of the lap
         if(player->getSprite()->getPosition().y < -300){
@@ -109,6 +123,7 @@ void Game::gameLoop(){
         if(hud->getFuelLast()==0){
             player->setMoving(false);
         }
+
 
         player->run(deltaTime.asSeconds()*1000);
 

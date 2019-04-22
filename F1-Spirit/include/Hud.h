@@ -13,7 +13,12 @@ using namespace std;
 class Hud
 {
     public:
-        Hud();
+        static Hud *getInstance(){
+            if(unicaInstancia == 0){
+                unicaInstancia = new Hud();
+            }
+            return unicaInstancia;
+        }
 
         sf::View* getHudView();
 
@@ -29,6 +34,8 @@ class Hud
         virtual ~Hud();
 
     private:
+        Hud();
+        static Hud *unicaInstancia;
         int fuelLast = 4;
         sf::View* hudView;
         sf::Texture* hudTexture;
