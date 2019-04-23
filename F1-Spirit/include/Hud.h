@@ -28,6 +28,7 @@ class Hud
         void updateGear(int);
         void updatePieceBroken(int);
         void repairPieces();
+        void updateLap(int);
 
         int getFuelLast();
 
@@ -43,6 +44,7 @@ class Hud
         sf::Font *font;
         sf::Text *velocityText;
         sf::Text *gearText;
+        sf::Text *lapText;
         sf::Texture* fuelTexture;
         sf::Sprite* fuelSprite;
         sf::Texture *brokenBoxTexture;

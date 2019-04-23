@@ -33,6 +33,15 @@ Hud::Hud()
     gearText->setColor(sf::Color::White);
     gearText->setCharacterSize(20);
 
+
+    // ==== Initialize lap text ====
+    lapText = new sf::Text("Lap: 1",*font);
+    lapText->setOrigin(lapText->getGlobalBounds().width / 2.f, lapText->getGlobalBounds().height /2.f);
+    lapText->setPosition(480,417);
+    lapText->setStyle(sf::Text::Bold);
+    lapText->setColor(sf::Color::White);
+    lapText->setCharacterSize(18);
+
     // ==== Initialize fuel sprites ====
     fuelTexture = new sf::Texture();
     fuelTexture->loadFromFile("Assets/graphics/hud/fuel.png");
@@ -142,6 +151,12 @@ void Hud::repairPieces(){
     }
 }
 
+void Hud::updateLap(int _lap){
+    string lapString = "Lap: " + to_string(_lap);
+
+    lapText->setString(lapString);
+}
+
 void Hud::draw(sf::RenderWindow* _window){
     _window->setView(*hudView);
     // ==== We draw first the image ====
@@ -150,6 +165,7 @@ void Hud::draw(sf::RenderWindow* _window){
     // ==== We draw now the texts and rectangles ====
     _window->draw(*velocityText);
     _window->draw(*gearText);
+    _window->draw(*lapText);
 
     for(int i=0; i<fuelLast;i++){
         _window->draw(fuelVector.at(i));

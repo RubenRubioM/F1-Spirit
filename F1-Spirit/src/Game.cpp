@@ -41,15 +41,16 @@ Game::Game(int x, int y, string title)
     treesRight->scale(0.4,0.4);
     treesRight->setPosition(800,0);
 
-    /*
-    grassTexture = new sf::Texture();
-    grassTexture->loadFromFile("Assets/Mapa/f1spiritMapCesped.png");
-    grassSprite = new sf::Sprite(*grassTexture);
-    grassSprite->scale(0.4,0.4);
-    grassSprite->setPosition(-100,-400);
-    */
+    minimap = new sf::View(sf::FloatRect(0,-170,2500,2500));
+
+    minimap->setViewport(sf::FloatRect(0.56f,0.05f,1.f,0.25f));
 
 
+    playerCircle.setRadius(25);
+    playerCircle.setOrigin(playerCircle.getRadius(),playerCircle.getRadius());
+    playerCircle.setFillColor(sf::Color::Blue);
+    playerCircle.setOutlineThickness(10);
+    playerCircle.setOutlineColor(sf::Color::Red);
 
     hud = Hud::getInstance();
 
@@ -71,19 +72,44 @@ void Game::draw(){
 
 
 
-    window->setView(*playerCamera->getCameraView());
 
 
-    window->draw(*roadSprite);
-    window->draw(*treesLeft);
-    window->draw(*treesRight);
+    for(int j=0; j<2; j++){
+        if(j==0){
+            //We draw the map
+            window->setView(*playerCamera->getCameraView());
 
-    //Draw all the cars
-    for(unsigned int i=0; i<numCars;i++){
-        window->draw(*cars[i]->getSprite());
+            window->draw(*roadSprite);
+            window->draw(*treesLeft);
+            window->draw(*treesRight);
 
+            //Draw all the cars
+            for(unsigned int i=0; i<numCars;i++){
+                window->draw(*cars[i]->getSprite());
+
+            }
+            hud->draw(window);
+        }else{
+            //We draw the minimap
+            window->setView(*minimap);
+
+            window->draw(*roadSprite);
+            window->draw(*treesLeft);
+            window->draw(*treesRight);
+
+            //Draw all the cars
+            for(unsigned int i=0; i<numCars;i++){
+                window->draw(*cars[i]->getSprite());
+
+            }
+            window->draw(playerCircle);
+        }
     }
-    hud->draw(window);
+
+
+
+
+
     window->display();
 }
 
@@ -116,6 +142,8 @@ void Game::gameLoop(){
         //We check if the car is at the end of the lap
         if(player->getSprite()->getPosition().y < -300){
             player->getSprite()->setPosition(player->getSprite()->getPosition().x+10,2300);
+            numLap++;
+            hud->updateLap(numLap);
         }
 
 
@@ -126,6 +154,7 @@ void Game::gameLoop(){
 
 
         player->run(deltaTime.asSeconds()*1000);
+        playerCircle.setPosition(player->getSprite()->getPosition());
 
         // ==== Update camera position ====
         playerCamera->moveCamera(cars[0]);

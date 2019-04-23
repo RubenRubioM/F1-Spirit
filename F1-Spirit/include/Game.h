@@ -26,6 +26,7 @@ class Game
 
     private:
         int numCars = 0;
+        int numLap = 1;
         sf::RenderWindow *window;
         sf::Event *event;
         sf::Time deltaTime;
@@ -40,6 +41,9 @@ class Game
         sf::Texture* treesTexture;
         sf::Sprite* treesLeft;
         sf::Sprite* treesRight;
+
+        sf::View* minimap;
+        sf::CircleShape playerCircle;
 
         Hud* hud;
 
