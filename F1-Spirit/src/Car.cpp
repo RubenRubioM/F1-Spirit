@@ -14,7 +14,7 @@ Car::Car(float _aceleration,string path, int carModel)
     sprite->setOrigin(sprite->getTexture()->getSize().x/2.f,sprite->getTexture()->getSize().y/2.f);
     sprite->setPosition(16,16); //We set origin to 16,16 so now we have to spawn him at 16,16 instead of 0,0
     sprite->scale(0.5,0.5);
-    sprite->setPosition(310,2300);
+    sprite->setPosition(220,2300);
 
     hud = Hud::getInstance();
 
@@ -175,6 +175,19 @@ void Car::setColisionando(bool _colisionando){
     colisionando = _colisionando;
 }
 
+void Car::setPitLane(bool _pitLane){
+    pitLane = _pitLane;
+}
+
+void Car::switchGodMode(){
+    if(godMode){
+        godMode = false;
+    }else{
+        godMode = true;
+    }
+    hud->updateGodMode(godMode);
+}
+
 float Car::getSpeed(){return speed;}
 float Car::getRotation(){return rotation;}
 bool Car::getMoving(){return moving;}
@@ -183,6 +196,9 @@ float Car::getAceleration(){return aceleration;}
 sf::Sprite* Car::getSprite(){return sprite;}
 sf::Clock Car::getSecondRotationClock(){return secondRotationClock;}
 sf::Clock Car::getFuelClock(){return fuelClock;}
+bool Car::getPitLane(){return pitLane;}
+bool Car::getGodMode(){return godMode;}
+
 
 Car::~Car()
 {

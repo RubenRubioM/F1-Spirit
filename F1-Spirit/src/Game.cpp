@@ -25,6 +25,7 @@ Game::Game(int x, int y, string title)
     Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
+    // ==== MAP ====
     roadTexture = new sf::Texture();
     roadTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
     roadSprite = new sf::Sprite(*roadTexture);
@@ -35,22 +36,38 @@ Game::Game(int x, int y, string title)
     treesTexture->loadFromFile("Assets/Mapa/Arboles.png");
     treesLeft = new sf::Sprite(*treesTexture);
     treesLeft->scale(0.4,0.4);
-    treesLeft->setPosition(100,0);
+    treesLeft->setPosition(0,0);
 
     treesRight = new sf::Sprite(*treesTexture);
     treesRight->scale(0.4,0.4);
-    treesRight->setPosition(800,0);
+    treesRight->setPosition(670,0);
 
-    minimap = new sf::View(sf::FloatRect(0,-170,2500,2500));
+    pitLaneTexture = new sf::Texture();
+    pitLaneTexture->loadFromFile("Assets/PitLane.png");
+    pitLaneSprite = new sf::Sprite(*pitLaneTexture);
+    pitLaneSprite->setOrigin(pitLaneTexture->getSize().x,pitLaneTexture->getSize().y);
+    pitLaneSprite->setScale(0.4,0.4);
+    pitLaneSprite->setPosition(220,2200);
 
-    minimap->setViewport(sf::FloatRect(0.56f,0.05f,1.f,0.25f));
-
+    // ==== MINIMAP ====
+    minimap = new sf::View(sf::FloatRect(0,-170,2300,2500));
+    minimap->setViewport(sf::FloatRect(0.553f,0.04f,1.f,0.27f));
 
     playerCircle.setRadius(25);
     playerCircle.setOrigin(playerCircle.getRadius(),playerCircle.getRadius());
     playerCircle.setFillColor(sf::Color::Blue);
     playerCircle.setOutlineThickness(10);
     playerCircle.setOutlineColor(sf::Color::Red);
+
+    // ==== TEXT ====
+    font = new sf::Font();
+    font->loadFromFile("Assets/Fonts/Formula1-Regular.ttf");
+    lapTimeText = new sf::Text();
+    lapTimeText->setFont(*font);
+    lapTimeText->setOrigin(lapTimeText->getGlobalBounds().width / 2.f, lapTimeText->getGlobalBounds().height /2.f);
+    lapTimeText->setPosition(220,2000);
+    lapTimeText->setColor(sf::Color::White);
+    lapTimeText->setCharacterSize(30);
 
     hud = Hud::getInstance();
 
@@ -70,10 +87,6 @@ void Game::addCar(Car* car){
 void Game::draw(){
     window->clear();
 
-
-
-
-
     for(int j=0; j<2; j++){
         if(j==0){
             //We draw the map
@@ -82,6 +95,8 @@ void Game::draw(){
             window->draw(*roadSprite);
             window->draw(*treesLeft);
             window->draw(*treesRight);
+            window->draw(*pitLaneSprite);
+
 
             //Draw all the cars
             for(unsigned int i=0; i<numCars;i++){
@@ -120,7 +135,7 @@ void Game::gameLoop(){
 
     Car *player = cars[0];
 
-
+    lapClock.restart();
     while(window->isOpen()){
         deltaTime = deltaClock.restart();
 
@@ -129,12 +144,24 @@ void Game::gameLoop(){
 
 
         //Colision
-        if(treesLeft->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds()) || treesRight->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
-            player->setColisionando(true);
+        if(player->getGodMode()==false){
+            if(treesLeft->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds()) || treesRight->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
+                player->setColisionando(true);
+            }
         }
+
 
         if(player->getColisionando()){
             player->colision();
+        }
+
+        //Colision with pitlane
+        if(numLap!=1 && player->getSpeed()<0.25f && !player->getPitLane() && pitLaneCD.getElapsedTime().asSeconds()>5.f){
+            if(pitLaneSprite->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
+                cout << "PitLane" << endl;
+                player->setPitLane(true);
+                pitLaneClock.restart();
+            }
         }
 
 
@@ -143,6 +170,10 @@ void Game::gameLoop(){
         if(player->getSprite()->getPosition().y < -300){
             player->getSprite()->setPosition(player->getSprite()->getPosition().x+10,2300);
             numLap++;
+            cout << to_string(lapClock.getElapsedTime().asSeconds()) << endl;
+            lapTimeText->setString(to_string(lapClock.getElapsedTime().asSeconds()));
+            lapTimeClock.restart();
+            lapClock.restart();
             hud->updateLap(numLap);
         }
 
@@ -152,8 +183,22 @@ void Game::gameLoop(){
             player->setMoving(false);
         }
 
+        if(!player->getPitLane()){
+            player->run(deltaTime.asSeconds()*1000);
+        }else{
+            //Enters pitLane
 
-        player->run(deltaTime.asSeconds()*1000);
+            player->repairCar();
+            hud->repairPieces();
+            player->reloadFuel();
+            if(pitLaneClock.getElapsedTime().asSeconds()>5.f){
+                player->setPitLane(false);
+                pitLaneCD.restart();
+                player->setSpeed(0);
+                cout << "Ya puedes retomar la carrera" << endl;
+            }
+        }
+
         playerCircle.setPosition(player->getSprite()->getPosition());
 
         // ==== Update camera position ====
@@ -161,8 +206,17 @@ void Game::gameLoop(){
 
         // ==== Update HUD ====
         hud->updateVelocityText(cars[0]->getSpeed());
-        hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
+        if(player->getGodMode()==false){
+          hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
+        }
         hud->updateGear(cars[0]->updateGear());
+        if(lapTimeClock.getElapsedTime().asSeconds()>5.f || numLap==1){
+           hud->updateLapClock(lapClock.getElapsedTime().asSeconds());
+
+        }else{
+            hud->getLapTimeText()->setColor(sf::Color::Yellow);
+        }
+
         //==============================================
 
         draw();
@@ -233,6 +287,10 @@ void Game::eventsLoop(){
                     case sf::Keyboard::T:
                         player->repairCar();
                         hud->repairPieces();
+                        break;
+
+                    case sf::Keyboard::G:
+                        player->switchGodMode();
 
                     default:
                         break;

@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>     /* srand, rand */
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -29,8 +30,11 @@ class Hud
         void updatePieceBroken(int);
         void repairPieces();
         void updateLap(int);
+        void updateLapClock(float);
+        void updateGodMode(bool);
 
         int getFuelLast();
+        sf::Text* getLapTimeText();
 
         virtual ~Hud();
 
@@ -45,6 +49,8 @@ class Hud
         sf::Text *velocityText;
         sf::Text *gearText;
         sf::Text *lapText;
+        sf::Text *lapTimeText;
+        sf::Text *godModeText;
         sf::Texture* fuelTexture;
         sf::Sprite* fuelSprite;
         sf::Texture *brokenBoxTexture;

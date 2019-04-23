@@ -27,6 +27,7 @@ class Game
     private:
         int numCars = 0;
         int numLap = 1;
+        sf::Clock lapClock;
         sf::RenderWindow *window;
         sf::Event *event;
         sf::Time deltaTime;
@@ -42,8 +43,18 @@ class Game
         sf::Sprite* treesLeft;
         sf::Sprite* treesRight;
 
+        sf::Texture* pitLaneTexture;
+        sf::Sprite* pitLaneSprite;
+
         sf::View* minimap;
         sf::CircleShape playerCircle;
+
+        sf::Clock lapTimeClock;
+        sf::Text* lapTimeText;
+        sf::Font* font;
+
+        sf::Clock pitLaneClock;
+        sf::Clock pitLaneCD;
 
         Hud* hud;
 

@@ -42,6 +42,24 @@ Hud::Hud()
     lapText->setColor(sf::Color::White);
     lapText->setCharacterSize(18);
 
+    // ==== Initialize lapTime text ====
+    lapTimeText = new sf::Text("0000",*font);
+    lapTimeText->setOrigin(lapTimeText->getGlobalBounds().width / 2.f, lapTimeText->getGlobalBounds().height /2.f);
+    lapTimeText->setPosition(480,435);
+    lapTimeText->setStyle(sf::Text::Bold);
+    lapTimeText->setColor(sf::Color::Green);
+    lapTimeText->setCharacterSize(12);
+
+    // ==== Initialize GodMode text ====
+    godModeText = new sf::Text("",*font);
+    godModeText->setOrigin(godModeText->getGlobalBounds().width / 2.f, godModeText->getGlobalBounds().height /2.f);
+    godModeText->setPosition(497,400);
+    godModeText->setStyle(sf::Text::Bold);
+    godModeText->setColor(sf::Color::Red);
+    godModeText->setOutlineThickness(3);
+    godModeText->setOutlineColor(sf::Color::Yellow);
+    godModeText->setCharacterSize(10);
+
     // ==== Initialize fuel sprites ====
     fuelTexture = new sf::Texture();
     fuelTexture->loadFromFile("Assets/graphics/hud/fuel.png");
@@ -157,6 +175,24 @@ void Hud::updateLap(int _lap){
     lapText->setString(lapString);
 }
 
+void Hud::updateGodMode(bool _godMode){
+    if(_godMode){
+        godModeText->setString("GOD MODE");
+    }else{
+        godModeText->setString("");
+    }
+}
+
+void Hud::updateLapClock(float _time){
+    // 1 minute -> 6000
+    // 1 minute 30 sec 20ms -> 9020
+    //cout << fixed << setprecision(2) << _time << endl;
+    lapTimeText->setColor(sf::Color::Green);
+
+    string lapTimeString  = to_string(_time);
+    lapTimeText->setString(lapTimeString);
+}
+
 void Hud::draw(sf::RenderWindow* _window){
     _window->setView(*hudView);
     // ==== We draw first the image ====
@@ -166,6 +202,8 @@ void Hud::draw(sf::RenderWindow* _window){
     _window->draw(*velocityText);
     _window->draw(*gearText);
     _window->draw(*lapText);
+    _window->draw(*lapTimeText);
+    _window->draw(*godModeText);
 
     for(int i=0; i<fuelLast;i++){
         _window->draw(fuelVector.at(i));
@@ -179,6 +217,7 @@ void Hud::draw(sf::RenderWindow* _window){
 }
 
 int Hud::getFuelLast(){return fuelLast;}
+sf::Text* Hud::getLapTimeText(){return lapTimeText;}
 
 Hud::~Hud()
 {

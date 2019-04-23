@@ -31,6 +31,8 @@ class Car
         float getAceleration();
         bool getColisionando();
         bool getMoving();
+        bool getPitLane();
+        bool getGodMode();
         sf::Sprite* getSprite();
         sf::Clock getSecondRotationClock();
         sf::Clock getFuelClock();
@@ -39,6 +41,8 @@ class Car
         void setMoving(bool);
         void setAceleration(float);
         void setColisionando(bool);
+        void setPitLane(bool);
+        void switchGodMode();
 
 
         virtual ~Car();
@@ -53,6 +57,8 @@ class Car
         bool pieceBroken[4] = {false,false,false,false};
         bool carCrashed = false;
         bool colisionando = false;
+        bool pitLane = false;
+        bool godMode = false;
         sf::Clock secondRotationClock;
         sf::Clock fuelClock;
         sf::Clock animationClock;
