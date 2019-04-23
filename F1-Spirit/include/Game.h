@@ -60,6 +60,7 @@ class Game
 
         sf::Clock rotationClock;
         bool rotationKeyUp = false;
+        bool raceFinished = false;
 
         enum carModels{
             Model1=0,Model2=1,Model3=2,Model4=3,Model5=4,Model6=6,Model7=7,Model8=8,Model9=9,Model10=10  //We skip model 5 because is the same as model 1

@@ -206,15 +206,23 @@ void Game::gameLoop(){
 
         // ==== Update HUD ====
         hud->updateVelocityText(cars[0]->getSpeed());
+
         if(player->getGodMode()==false){
           hud->updateFuel(cars[0]->getFuelClock().getElapsedTime().asSeconds());
         }
+
         hud->updateGear(cars[0]->updateGear());
+
         if(lapTimeClock.getElapsedTime().asSeconds()>5.f || numLap==1){
            hud->updateLapClock(lapClock.getElapsedTime().asSeconds());
 
         }else{
             hud->getLapTimeText()->setColor(sf::Color::Yellow);
+        }
+
+        if(numLap==6){
+            raceFinished = true;
+            player->setMoving(false);
         }
 
         //==============================================
