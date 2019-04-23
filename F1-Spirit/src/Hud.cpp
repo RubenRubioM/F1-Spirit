@@ -53,7 +53,7 @@ Hud::Hud()
     // ==== Initialize GodMode text ====
     godModeText = new sf::Text("",*font);
     godModeText->setOrigin(godModeText->getGlobalBounds().width / 2.f, godModeText->getGlobalBounds().height /2.f);
-    godModeText->setPosition(497,400);
+    godModeText->setPosition(512,397);
     godModeText->setStyle(sf::Text::Bold);
     godModeText->setColor(sf::Color::Red);
     godModeText->setOutlineThickness(3);
