@@ -161,6 +161,7 @@ void Game::gameLoop(){
                 cout << "PitLane" << endl;
                 player->setPitLane(true);
                 pitLaneClock.restart();
+                playerCamera->getCameraView()->zoom(0.5);
             }
         }
 
@@ -169,8 +170,8 @@ void Game::gameLoop(){
         //We check if the car is at the end of the lap
         if(player->getSprite()->getPosition().y < -300){
             player->getSprite()->setPosition(player->getSprite()->getPosition().x+10,2300);
-            numLap++;
             cout << to_string(lapClock.getElapsedTime().asSeconds()) << endl;
+            numLap++;
             lapTimeText->setString(to_string(lapClock.getElapsedTime().asSeconds()));
             lapTimeClock.restart();
             lapClock.restart();
@@ -195,6 +196,7 @@ void Game::gameLoop(){
                 player->setPitLane(false);
                 pitLaneCD.restart();
                 player->setSpeed(0);
+                playerCamera->getCameraView()->zoom(2);
                 cout << "Ya puedes retomar la carrera" << endl;
             }
         }
