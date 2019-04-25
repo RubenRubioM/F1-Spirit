@@ -182,7 +182,7 @@ void Game::gameLoop(){
                     mapColor = heatMap.getPixel(i,player->getSprite()->getPosition().y);
                     if(mapColor.g!=255){
                         player->getSprite()->setPosition(i+60,player->getSprite()->getPosition().y);
-                        player->setSpeed(0.15);
+                        player->setSpeed(0.04);
                         break;
                     }
                 }
