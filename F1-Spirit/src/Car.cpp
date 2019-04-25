@@ -13,8 +13,8 @@ Car::Car(float _aceleration,string path, int carModel)
     sprite = new sf::Sprite(*texture);
     sprite->setOrigin(sprite->getTexture()->getSize().x/2.f,sprite->getTexture()->getSize().y/2.f);
     sprite->setPosition(16,16); //We set origin to 16,16 so now we have to spawn him at 16,16 instead of 0,0
-    sprite->scale(0.5,0.5);
-    sprite->setPosition(220,2300);
+    //sprite->scale(0.5,0.5);
+    sprite->setPosition(750,7900);
 
     hud = Hud::getInstance();
 
@@ -67,8 +67,8 @@ void Car::colision(){
         colisionando = false;
         frame = 0;
         hud->updatePieceBroken(breakPiece());
-        sprite->setPosition(300,sprite->getPosition().y);
-        speed = 0;
+        //sprite->setPosition(750,sprite->getPosition().y);
+
     }
 
 

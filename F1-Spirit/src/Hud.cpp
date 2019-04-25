@@ -35,7 +35,7 @@ Hud::Hud()
 
 
     // ==== Initialize lap text ====
-    lapText = new sf::Text("Laps left: 5",*font);
+    lapText = new sf::Text("Laps left: 3",*font);
     lapText->setOrigin(lapText->getGlobalBounds().width / 2.f, lapText->getGlobalBounds().height /2.f);
     lapText->setPosition(522,417);
     lapText->setStyle(sf::Text::Bold);
@@ -131,15 +131,15 @@ void Hud::updateVelocityText(float _velocity){
 void Hud::updateFuel(float _time){
 
 
-    if(_time <= 7.f){
+    if(_time <= fuelTickTime){
         fuelLast = 5;
-    }else if( _time >7.f && _time <=14.f){
+    }else if( _time > fuelTickTime && _time <= fuelTickTime*2){
         fuelLast = 4;
-    }else if( _time >14.f && _time <=21.f){
+    }else if( _time > fuelTickTime*2 && _time <= fuelTickTime*3){
         fuelLast = 3;
-    }else if( _time >21.f && _time <=28.f){
+    }else if( _time > fuelTickTime*3 && _time <= fuelTickTime*4){
         fuelLast = 2;
-    }else if(_time >28.f && _time <=35.f){
+    }else if(_time > fuelTickTime*4 && _time <= fuelTickTime*5){
         fuelLast = 1;
     }else{
         fuelLast = 0;
@@ -170,7 +170,7 @@ void Hud::repairPieces(){
 }
 
 void Hud::updateLap(int _lap){
-    string lapString = "Laps left: " + to_string(6-_lap);
+    string lapString = "Laps left: " + to_string(4-_lap);
 
     lapText->setString(lapString);
 }

@@ -29,34 +29,40 @@ Game::Game(int x, int y, string title)
     roadTexture = new sf::Texture();
     roadTexture->loadFromFile("Assets/Mapa/f1spiritMap.png");
     roadSprite = new sf::Sprite(*roadTexture);
-    roadSprite->scale(0.4,0.4);
-    roadSprite->setPosition(-100,-400);
+    //roadSprite->scale(0.4,0.4);
+    roadSprite->setPosition(0,0);
+
+    roadHeatTexture = new sf::Texture();
+    roadHeatTexture->loadFromFile("Assets/Mapa/f1spiritMapCalor.png");
+    roadHeatSprite = new sf::Sprite(*roadHeatTexture);
+    //roadHeatSprite->scale(0.4,0.4);
+    roadHeatSprite->setPosition(0,0);
 
     treesTexture = new sf::Texture();
     treesTexture->loadFromFile("Assets/Mapa/Arboles.png");
     treesLeft = new sf::Sprite(*treesTexture);
-    treesLeft->scale(0.4,0.4);
-    treesLeft->setPosition(0,0);
+    //treesLeft->scale(0.4,0.4);
+    treesLeft->setPosition(200,0);
 
     treesRight = new sf::Sprite(*treesTexture);
-    treesRight->scale(0.4,0.4);
-    treesRight->setPosition(670,0);
+    //treesRight->scale(0.4,0.4);
+    treesRight->setPosition(2000,0);
 
     pitLaneTexture = new sf::Texture();
     pitLaneTexture->loadFromFile("Assets/PitLane.png");
     pitLaneSprite = new sf::Sprite(*pitLaneTexture);
     pitLaneSprite->setOrigin(pitLaneTexture->getSize().x,pitLaneTexture->getSize().y);
-    pitLaneSprite->setScale(0.4,0.4);
-    pitLaneSprite->setPosition(220,2200);
+    //pitLaneSprite->setScale(0.4,0.4);
+    pitLaneSprite->setPosition(750,7600);
 
     // ==== MINIMAP ====
-    minimap = new sf::View(sf::FloatRect(0,-170,2300,2500));
-    minimap->setViewport(sf::FloatRect(0.553f,0.04f,1.f,0.27f));
+    minimap = new sf::View(sf::FloatRect(0,0,2300,8000));
+    minimap->setViewport(sf::FloatRect(0.522f,0.04f,.42f,0.27f));
 
-    playerCircle.setRadius(25);
-    playerCircle.setOrigin(playerCircle.getRadius(),playerCircle.getRadius());
-    playerCircle.setFillColor(sf::Color::Blue);
-    playerCircle.setOutlineThickness(10);
+    playerCircle = *new sf::RectangleShape(sf::Vector2f(50,300));
+    playerCircle.setOrigin(playerCircle.getSize().x,playerCircle.getSize().y);
+    playerCircle.setFillColor(sf::Color::Yellow);
+    playerCircle.setOutlineThickness(20);
     playerCircle.setOutlineColor(sf::Color::Red);
 
     // ==== TEXT ====
@@ -93,6 +99,7 @@ void Game::draw(){
             window->setView(*playerCamera->getCameraView());
 
             window->draw(*roadSprite);
+            //window->draw(*roadHeatSprite);
             window->draw(*treesLeft);
             window->draw(*treesRight);
             window->draw(*pitLaneSprite);
@@ -109,6 +116,7 @@ void Game::draw(){
             window->setView(*minimap);
 
             window->draw(*roadSprite);
+           // window->draw(*roadHeatSprite);
             window->draw(*treesLeft);
             window->draw(*treesRight);
 
@@ -136,29 +144,56 @@ void Game::gameLoop(){
     Car *player = cars[0];
 
     lapClock.restart();
+    sf::Image heatMap = roadHeatTexture->copyToImage();
+    sf::Color mapColor;
+
     while(window->isOpen()){
         deltaTime = deltaClock.restart();
 
         eventsLoop();
 
 
+        // ==== Colisions ====
+        mapColor = heatMap.getPixel(player->getSprite()->getPosition().x,player->getSprite()->getPosition().y);
 
-        //Colision
+        //Colision with the grass
+        if(mapColor.g==255 && !player->getGodMode()){
+            player->setSpeed(player->getSpeed()-0.0002);
+        }
+
+
+
+        //Colision with the trees
         if(player->getGodMode()==false){
             if(treesLeft->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds()) || treesRight->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
                 player->setColisionando(true);
             }
         }
 
+        /*
+                        Summary of this
+        At the end of the colision we check every pixel in the row and move the player at the first point who isn't grass but with some speed to don't get stuck again
+        */
 
         if(player->getColisionando()){
             player->colision();
+            if(player->getColisionando()==false){
+                for(int i=0; i<2000; i++){
+                    mapColor = heatMap.getPixel(i,player->getSprite()->getPosition().y);
+                    if(mapColor.g!=255){
+                        player->getSprite()->setPosition(i+60,player->getSprite()->getPosition().y);
+                        player->setSpeed(0.15);
+                        break;
+                    }
+                }
+
+            }
         }
 
         //Colision with pitlane
-        if(numLap!=1 && player->getSpeed()<0.25f && !player->getPitLane() && pitLaneCD.getElapsedTime().asSeconds()>5.f){
+        if(numLap!=1 && player->getSpeed()<0.25f && !player->getPitLane() && pitLaneCD.getElapsedTime().asSeconds()>15.f){
             if(pitLaneSprite->getGlobalBounds().intersects(player->getSprite()->getGlobalBounds())){
-                cout << "PitLane" << endl;
+                cout << "Entra a pitlane..." << endl;
                 player->setPitLane(true);
                 pitLaneClock.restart();
                 playerCamera->getCameraView()->zoom(0.5);
@@ -168,8 +203,8 @@ void Game::gameLoop(){
 
 
         //We check if the car is at the end of the lap
-        if(player->getSprite()->getPosition().y < -300){
-            player->getSprite()->setPosition(player->getSprite()->getPosition().x+10,2300);
+        if(player->getSprite()->getPosition().y < 200){
+            player->getSprite()->setPosition(player->getSprite()->getPosition().x+30,7900);
             cout << to_string(lapClock.getElapsedTime().asSeconds()) << endl;
             numLap++;
             lapTimeText->setString(to_string(lapClock.getElapsedTime().asSeconds()));
@@ -222,7 +257,7 @@ void Game::gameLoop(){
             hud->getLapTimeText()->setColor(sf::Color::Yellow);
         }
 
-        if(numLap==6){
+        if(numLap==4){
             raceFinished = true;
             player->setMoving(false);
         }
@@ -282,6 +317,9 @@ void Game::eventsLoop(){
                             player->setRotation(-30);
                         }
                         break;
+
+                    case sf::Keyboard::M:
+                        player->setSpeed(player->getSpeed()-0.002);
 
                     //TODO just for testing
                     case sf::Keyboard::R:
