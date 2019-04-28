@@ -49,7 +49,7 @@ class Car
 
     private:
         float speed = 0;
-        float rotation; // 45 or -45
+        float rotation = 0; // 45 or -45
         float aceleration;
         float speedPenalty = 1; // Penalty to be applied to our car speed
         int frame = 0;
