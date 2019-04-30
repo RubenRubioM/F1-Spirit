@@ -22,6 +22,7 @@ Game::Game(int x, int y, string title)
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
     event = new sf::Event();
 
+
     Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
     playerCamera = new Camera();
 
@@ -86,8 +87,26 @@ Game::Game(int x, int y, string title)
     hud = Hud::getInstance();
     ghostCar = new GhostCar("Assets/graphics/cars-f1.png",Model1);
 
+    // ==== Enemy cars ====
+    EnemyCar* ec1 = new EnemyCar("Assets/graphics/cars-f1.png",Model3,"Assets/Paths/path-1.txt");
+    EnemyCar* ec2 = new EnemyCar("Assets/graphics/cars-f1.png",Model2,"Assets/Paths/path-2.txt");
+    EnemyCar* ec3 = new EnemyCar("Assets/graphics/cars-f1.png",Model4,"Assets/Paths/path-3.txt");
+    EnemyCar* ec4 = new EnemyCar("Assets/graphics/cars-f1.png",Model3,"Assets/Paths/path-4.txt");
+    EnemyCar* ec5 = new EnemyCar("Assets/graphics/cars-f1.png",Model5,"Assets/Paths/path-5.txt");
+    EnemyCar* ec6 = new EnemyCar("Assets/graphics/cars-f1.png",Model6,"Assets/Paths/path-6.txt");
+    EnemyCar* ec7 = new EnemyCar("Assets/graphics/cars-f1.png",Model7,"Assets/Paths/path-7.txt");
+
+    enemyCars.push_back(ec1);
+    enemyCars.push_back(ec2);
+    enemyCars.push_back(ec3);
+    enemyCars.push_back(ec4);
+    enemyCars.push_back(ec5);
+    enemyCars.push_back(ec6);
+    enemyCars.push_back(ec7);
+
     //adding cars
     addCar(player);
+
 
     //GameLoop, infinity iterations
     gameLoop();
@@ -119,6 +138,12 @@ void Game::draw(){
                 window->draw(*cars[i]->getSprite());
 
             }
+
+            //Draw enemy cars
+            for(unsigned int j=0; j<enemyCars.size();j++){
+                enemyCars.at(j)->draw(window);
+            }
+
             if(numLap>1){
                 ghostCar->draw(window);
             }
@@ -288,6 +313,11 @@ void Game::gameLoop(){
         // ===== Ghost Car ======
         ghostCar->updatePoint(player);
 
+        //===== Enemy cars ======
+        for(int i=0; i<enemyCars.size();i++){
+            enemyCars.at(i)->updatePosition();
+        }
+
         if(numLap>1){
             ghostCar->updatePosition();
 
@@ -353,7 +383,7 @@ void Game::eventsLoop(){
 
                     case sf::Keyboard::M:
                         player->setSpeed(player->getSpeed()-0.002);
-
+                        break;
                     //TODO just for testing
                     case sf::Keyboard::R:
                         player->reloadFuel();
@@ -372,7 +402,7 @@ void Game::eventsLoop(){
 
                     case sf::Keyboard::G:
                         player->switchGodMode();
-
+                        break;
                     default:
                         break;
 

@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Hud.h"
 #include "GhostCar.h"
+#include "EnemyCar.h"
 
 #define NUMCARSMAX 51
 
@@ -34,6 +35,7 @@ class Game
         sf::Time deltaTime;
         sf::Sprite* carSprites[NUMCARSMAX]; //Maximum 50 enemies and the player
         Car* cars[NUMCARSMAX];
+        vector<EnemyCar*> enemyCars;
         Camera *playerCamera;
         GhostCar* ghostCar;
         sf::Sprite* roadSprite;

@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <queue>
+#include <fstream>
+
+
 
 struct Data{
     float x;
@@ -32,6 +35,7 @@ class GhostCar
     private:
         sf::Texture* texture;
         sf::Sprite* sprite;
+        std::ofstream fs;
 
         std::queue<Data> actualPoints;
         std::queue<Data> lastPoints;
