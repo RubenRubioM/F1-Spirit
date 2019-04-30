@@ -11,6 +11,11 @@ GhostCar::GhostCar(string path, int carModel)
     sprite->setPosition(16,16); //We set origin to 16,16 so now we have to spawn him at 16,16 instead of 0,0
     sprite->setColor(sf::Color(255,255,255,100));
 
+    std::cout << "Recording IA... " << std::endl;
+    fs.open("Assets/Paths/path-8.txt");
+
+
+
 }
 
 void GhostCar::updatePoint(Car* _player){
@@ -20,6 +25,12 @@ void GhostCar::updatePoint(Car* _player){
     d.angle = _player->getRotation();
 
     actualPoints.push(d);
+
+    //Write the points
+    std::string x = to_string(d.x);
+    std::string y = to_string(d.y);
+    std::string angle = to_string(d.angle);
+    fs << x << "-" << y << "-" << angle << "-" <<std::endl;
 }
 
 void GhostCar::updatePosition(){

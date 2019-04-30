@@ -1,28 +1,37 @@
 # depslib dependency file v1.0
-1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/main.cpp
+1556629197 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/main.cpp
 	<SFML/Graphics.hpp>
 	"Game.h"
 
-1556460056 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Game.h
+1556637204 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Game.h
 	"SFML/Graphics.hpp"
 	<vector>
 	"Car.h"
 	"Camera.h"
 	"Hud.h"
 	"GhostCar.h"
+	"EnemyCar.h"
 
-1556460241 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
+1556638041 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
 	"Game.h"
 	<iostream>
 	<math.h>
 
-1550945626 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/EnemyCar.cpp
+1556637351 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/EnemyCar.cpp
 	"EnemyCar.h"
 
-1550945104 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/EnemyCar.h
-	<Car.h>
+1556636975 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/EnemyCar.h
+	"SFML/Graphics.hpp"
+	"GhostCar.h"
+	<stdlib.h>
+	<time.h>
+	<stdio.h>
+	<iostream>
+	<queue>
+	<fstream>
+	<vector>
 
-1556459690 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
+1556629197 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
 	"SFML/Graphics.hpp"
 	<stdlib.h>
 	<time.h>
@@ -30,20 +39,20 @@
 	<iostream>
 	"Hud.h"
 
-1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
+1556629197 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
 	"Car.h"
 	<math.h>
 
-1556452884 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Camera.h
+1556629197 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Camera.h
 	"Car.h"
 
-1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Camera.cpp
+1556629197 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Camera.cpp
 	"Camera.h"
 
-1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
+1556629197 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
 	"Hud.h"
 
-1556452884 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
+1556634784 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
 	"SFML/Graphics.hpp"
 	<iostream>
 	<string>
@@ -90,10 +99,10 @@
 1554797148 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Hud.cpp
 	"Hud.h"
 
-1556460036 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/GhostCar.cpp
+1556638109 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/GhostCar.cpp
 	"GhostCar.h"
 
-1556459114 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/GhostCar.h
+1556634129 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/GhostCar.h
 	"SFML/Graphics.hpp"
 	"Car.h"
 	<stdlib.h>
@@ -101,4 +110,5 @@
 	<stdio.h>
 	<iostream>
 	<queue>
+	<fstream>
 
