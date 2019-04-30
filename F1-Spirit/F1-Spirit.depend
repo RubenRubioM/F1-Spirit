@@ -1,16 +1,17 @@
 # depslib dependency file v1.0
-1556208708 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/main.cpp
+1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/main.cpp
 	<SFML/Graphics.hpp>
 	"Game.h"
 
-1556221633 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Game.h
+1556460056 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Game.h
 	"SFML/Graphics.hpp"
 	<vector>
 	"Car.h"
 	"Camera.h"
 	"Hud.h"
+	"GhostCar.h"
 
-1556222167 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
+1556460241 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Game.cpp
 	"Game.h"
 	<iostream>
 	<math.h>
@@ -21,7 +22,7 @@
 1550945104 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/EnemyCar.h
 	<Car.h>
 
-1556208708 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
+1556459690 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Car.h
 	"SFML/Graphics.hpp"
 	<stdlib.h>
 	<time.h>
@@ -29,20 +30,20 @@
 	<iostream>
 	"Hud.h"
 
-1556222319 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
+1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Car.cpp
 	"Car.h"
 	<math.h>
 
-1556208708 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Camera.h
+1556452884 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Camera.h
 	"Car.h"
 
-1556209588 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Camera.cpp
+1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Camera.cpp
 	"Camera.h"
 
-1556216991 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
+1556452884 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/Hud.cpp
 	"Hud.h"
 
-1556222347 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
+1556452884 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/Hud.h
 	"SFML/Graphics.hpp"
 	<iostream>
 	<string>
@@ -88,4 +89,16 @@
 
 1554797148 source:/home/rrm73/Escritorio/F1-Spirit/F1-Spirit/src/Hud.cpp
 	"Hud.h"
+
+1556460036 source:/home/rrm73/Desktop/F1-Spirit/F1-Spirit/src/GhostCar.cpp
+	"GhostCar.h"
+
+1556459114 /home/rrm73/Desktop/F1-Spirit/F1-Spirit/include/GhostCar.h
+	"SFML/Graphics.hpp"
+	"Car.h"
+	<stdlib.h>
+	<time.h>
+	<stdio.h>
+	<iostream>
+	<queue>
 

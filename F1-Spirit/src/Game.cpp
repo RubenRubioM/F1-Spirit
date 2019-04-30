@@ -59,11 +59,19 @@ Game::Game(int x, int y, string title)
     minimap = new sf::View(sf::FloatRect(0,0,2300,8000));
     minimap->setViewport(sf::FloatRect(0.522f,0.04f,.42f,0.27f));
 
+
     playerCircle = *new sf::RectangleShape(sf::Vector2f(50,300));
     playerCircle.setOrigin(playerCircle.getSize().x,playerCircle.getSize().y);
     playerCircle.setFillColor(sf::Color::Yellow);
     playerCircle.setOutlineThickness(20);
     playerCircle.setOutlineColor(sf::Color::Red);
+
+
+    ghostCircle = *new sf::RectangleShape(sf::Vector2f(50,300));
+    ghostCircle.setOrigin(ghostCircle.getSize().x,ghostCircle.getSize().y);
+    ghostCircle.setFillColor(sf::Color::Blue);
+    ghostCircle.setOutlineThickness(20);
+    ghostCircle.setOutlineColor(sf::Color::Red);
 
     // ==== TEXT ====
     font = new sf::Font();
@@ -76,6 +84,7 @@ Game::Game(int x, int y, string title)
     lapTimeText->setCharacterSize(30);
 
     hud = Hud::getInstance();
+    ghostCar = new GhostCar("Assets/graphics/cars-f1.png",Model1);
 
     //adding cars
     addCar(player);
@@ -110,6 +119,10 @@ void Game::draw(){
                 window->draw(*cars[i]->getSprite());
 
             }
+            if(numLap>1){
+                ghostCar->draw(window);
+            }
+
             hud->draw(window);
         }else{
             //We draw the minimap
@@ -124,6 +137,10 @@ void Game::draw(){
             for(unsigned int i=0; i<numCars;i++){
                 window->draw(*cars[i]->getSprite());
 
+            }
+
+            if(numLap>1){
+                window->draw(ghostCircle);
             }
             window->draw(playerCircle);
         }
@@ -211,6 +228,9 @@ void Game::gameLoop(){
             lapTimeClock.restart();
             lapClock.restart();
             hud->updateLap(numLap);
+
+            //When you end the lap the ghost start to follow the last points you followed
+            ghostCar->startGhost();
         }
 
 
@@ -236,7 +256,9 @@ void Game::gameLoop(){
             }
         }
 
+        // ===== MINIMAP =====
         playerCircle.setPosition(player->getSprite()->getPosition());
+        ghostCircle.setPosition(ghostCar->getSprite()->getPosition());
 
         // ==== Update camera position ====
         playerCamera->moveCamera(cars[0]);
@@ -261,6 +283,17 @@ void Game::gameLoop(){
             raceFinished = true;
             player->setMoving(false);
         }
+
+
+        // ===== Ghost Car ======
+        ghostCar->updatePoint(player);
+
+        if(numLap>1){
+            ghostCar->updatePosition();
+
+        }
+
+
 
         //==============================================
 
