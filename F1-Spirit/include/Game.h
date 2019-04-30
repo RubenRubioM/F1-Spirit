@@ -47,7 +47,7 @@ class Game
         sf::Sprite* pitLaneSprite;
 
         sf::View* minimap;
-        sf::CircleShape playerCircle;
+        sf::RectangleShape playerCircle;
 
         sf::Clock lapTimeClock;
         sf::Text* lapTimeText;

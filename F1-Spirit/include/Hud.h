@@ -42,6 +42,7 @@ class Hud
         Hud();
         static Hud *unicaInstancia;
         int fuelLast = 4;
+        int fuelTickTime = 15;
         sf::View* hudView;
         sf::Texture* hudTexture;
         sf::Sprite* hud;
