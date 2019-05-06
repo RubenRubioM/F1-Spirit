@@ -39,7 +39,7 @@ void Car::run(float _deltaTime){
     float radians = (rotation*PI)/180.0;
 
     if(speed>0){
-       sprite->move(speed*sin(radians)*_deltaTime,-speed*cos(radians)*_deltaTime);
+       sprite->move((speed*sin(radians))*_deltaTime,(-speed*cos(radians))*_deltaTime);
     }else{
         sprite->move(0,0);
     }

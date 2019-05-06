@@ -1,4 +1,8 @@
-1) Cambiar el compilador de c++ al 11 o 14 (da igual con el 11 funciona suficiente)
+Ruben Rubio Martinez
+Horario: Miercoles 13:00
+
+
+1) Cambiar el compilador de c++ al 14 
 
 	1.1) Proyect -> Build options -> Compiler settings -> Have g++ follow the C++14 ISO.... (activar eso)
 
@@ -13,3 +17,7 @@
 4) La detección de pasar por el cesped esta hecho con un mapa de calor pero la colision con arboles no ya que iba cambiando sus posiciones a la hora de probar y no queria dejarlo fijo a una imagen
 
 5) Cuando chocas con un arbol te pone en el lugar en el eje x mas cercano donde no haya cesped
+
+6) Los coches enemigos se basan en archivos de texto que escribo cuando juego y luego reproduzco sus movimientos, esa la mejor manera que se me ha ocurrido para recrear de la forma mas real una inteligencia artificial asi
+
+7) Mejoras posibles que no pude hacer por falta de tiempo: Mi sistema de IA es guardarme las posiciones y rotaciones del coche pero una manera mucho mas optima habria sido guardarme las velocidades y de ahi ya calculo los puntos

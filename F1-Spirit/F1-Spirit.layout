@@ -2,51 +2,64 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src/Camera.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include/Car.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="721" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="171" topLine="0" />
+			<Cursor1 position="1070" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/GhostCar.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="582" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/EnemyCar.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1672" topLine="47" />
 		</Cursor>
 	</File>
 	<File name="include/Game.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1362" topLine="40" />
+			<Cursor1 position="761" topLine="44" />
 		</Cursor>
 	</File>
-	<File name="src/Hud.cpp" open="1" top="1" tabpos="5" split="0" active="1" splitpos="822" zoom_1="0" zoom_2="0">
+	<File name="src/Hud.cpp" open="1" top="1" tabpos="8" split="0" active="1" splitpos="822" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2229" topLine="30" />
-		</Cursor>
-		<Folding>
-			<Collapse line="103" />
-			<Collapse line="130" />
-		</Folding>
-	</File>
-	<File name="include/Car.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="721" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1070" topLine="21" />
-		</Cursor>
-	</File>
-	<File name="include/Hud.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="798" topLine="30" />
-		</Cursor>
-	</File>
-	<File name="src/Car.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3949" topLine="139" />
-		</Cursor>
-		<Folding>
-			<Collapse line="24" />
-		</Folding>
-	</File>
-	<File name="src/Game.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6550" topLine="179" />
+			<Cursor1 position="2270" topLine="39" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="138" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Camera.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="171" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include/Hud.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1008" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="include/GhostCar.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="202" topLine="11" />
+		</Cursor>
+	</File>
+	<File name="include/EnemyCar.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="572" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="src/Game.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="695" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src/Car.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1055" topLine="21" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

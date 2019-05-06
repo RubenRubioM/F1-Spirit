@@ -56,8 +56,8 @@ Hud::Hud()
     godModeText->setPosition(512,397);
     godModeText->setStyle(sf::Text::Bold);
     godModeText->setColor(sf::Color::Red);
-    godModeText->setOutlineThickness(3);
-    godModeText->setOutlineColor(sf::Color::Yellow);
+    //godModeText->setOutlineThickness(3);
+    //godModeText->setOutlineColor(sf::Color::Yellow);
     godModeText->setCharacterSize(10);
 
     // ==== Initialize fuel sprites ====

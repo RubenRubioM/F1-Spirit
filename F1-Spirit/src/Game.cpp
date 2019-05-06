@@ -21,6 +21,7 @@ Game::Game(int x, int y, string title)
 
     window = new sf::RenderWindow(sf::VideoMode(x,y),title);
     event = new sf::Event();
+    window->setFramerateLimit(700);
 
 
     Car *player = new Car(0.0001,"Assets/graphics/cars-f1.png",Model1);
@@ -194,7 +195,6 @@ void Game::gameLoop(){
 
         eventsLoop();
 
-
         // ==== Colisions ====
         mapColor = heatMap.getPixel(player->getSprite()->getPosition().x,player->getSprite()->getPosition().y);
 
@@ -307,6 +307,7 @@ void Game::gameLoop(){
         if(numLap==4){
             raceFinished = true;
             player->setMoving(false);
+            cout << "CARRERA FINALIZADA" << endl;
         }
 
 
